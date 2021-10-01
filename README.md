@@ -3,7 +3,7 @@ Project1
 Dave Bergeron
 9/30/2021
 
-## R Markdown
+## This will be the project 1 document
 
 This is an R Markdown document. Markdown is a simple formatting syntax
 for authoring HTML, PDF, and MS Word documents. For more details on
