@@ -31,7 +31,7 @@ This project was super fun, I had no idea what to expect when starting
 it, but as I immeresed myself in the world of API’s, I became enthralled
 with the data I was compliling.
 
-<img src="asteroid.PNG" width="1110" />
+<img src="_pics/asteroid.PNG" width="1110" />
 
 # Functions to contact API and inspect data
 
@@ -58,7 +58,7 @@ asteroidcall("1998-09-27", "1998-10-02")
     ##  $ all_headers:List of 1
     ##  $ cookies    :'data.frame': 0 obs. of  7 variables:
     ##  $ content    : raw [1:132935] 7b 22 6c 69 ...
-    ##  $ date       : POSIXct[1:1], format: "2021-10-05 00:13:56"
+    ##  $ date       : POSIXct[1:1], format:  ...
     ##  $ times      : Named num [1:6] 0.00 4.50e-05 4.70e-05 1.04e-04 1.19e+01 ...
     ##   ..- attr(*, "names")= chr [1:6] "redirect" "namelookup" "connect" "pretransfer" ...
     ##  $ request    :List of 7
@@ -152,25 +152,25 @@ asteroiddata2
 ```
 
     ## # A tibble: 117 x 16
-    ##    Asteroid_ID Asteroid_Name potentially_hazar~ magnitude
-    ##    <chr>       <chr>         <fct>                  <dbl>
-    ##  1 3398088     (2007 YF)     Not Potentially H~      24.8
-    ##  2 3703059     (2014 YE15)   Not Potentially H~      28.3
-    ##  3 3781268     (2017 QV34)   Potentially Hazar~      20.4
-    ##  4 54185136    (2021 PF10)   Not Potentially H~      22.9
-    ##  5 54186661    (2021 PO26)   Not Potentially H~      25  
-    ##  6 54191249    (2021 QK3)    Not Potentially H~      24.6
-    ##  7 54192179    (2021 QK6)    Not Potentially H~      22.8
-    ##  8 54192187    (2021 RN1)    Not Potentially H~      22.2
-    ##  9 54193341    (2021 RU3)    Not Potentially H~      24.9
-    ## 10 54194338    (2021 RL5)    Not Potentially H~      25.8
-    ## # ... with 107 more rows, and 12 more variables:
-    ## #   sentry_object <fct>, est_diameter_km_min <dbl>,
+    ##    Asteroid_ID Asteroid_Name
+    ##    <chr>       <chr>        
+    ##  1 3398088     (2007 YF)    
+    ##  2 3703059     (2014 YE15)  
+    ##  3 3781268     (2017 QV34)  
+    ##  4 54185136    (2021 PF10)  
+    ##  5 54186661    (2021 PO26)  
+    ##  6 54191249    (2021 QK3)   
+    ##  7 54192179    (2021 QK6)   
+    ##  8 54192187    (2021 RN1)   
+    ##  9 54193341    (2021 RU3)   
+    ## 10 54194338    (2021 RL5)   
+    ## # ... with 107 more rows, and 14 more
+    ## #   variables:
+    ## #   potentially_hazardous <fct>,
+    ## #   magnitude <dbl>, sentry_object <fct>,
+    ## #   est_diameter_km_min <dbl>,
     ## #   est_diameter_km_max <dbl>,
-    ## #   est_diameter_meter_min <dbl>,
-    ## #   est_diameter_meter_max <dbl>,
-    ## #   est_diameter_miles_min <dbl>,
-    ## #   est_diameter_miles_max <dbl>, ...
+    ## #   est_diameter_meter_min <dbl>, ...
 
 ## 2nd endpoint call
 
@@ -201,25 +201,25 @@ asteroiddata3
 ```
 
     ## # A tibble: 117 x 17
-    ##    Asteroid_ID Asteroid_Name potentially_hazar~ magnitude
-    ##    <chr>       <chr>         <fct>                  <dbl>
-    ##  1 3398088     (2007 YF)     Not Potentially H~      24.8
-    ##  2 3703059     (2014 YE15)   Not Potentially H~      28.3
-    ##  3 3781268     (2017 QV34)   Potentially Hazar~      20.4
-    ##  4 54185136    (2021 PF10)   Not Potentially H~      22.9
-    ##  5 54186661    (2021 PO26)   Not Potentially H~      25  
-    ##  6 54191249    (2021 QK3)    Not Potentially H~      24.6
-    ##  7 54192179    (2021 QK6)    Not Potentially H~      22.8
-    ##  8 54192187    (2021 RN1)    Not Potentially H~      22.2
-    ##  9 54193341    (2021 RU3)    Not Potentially H~      24.9
-    ## 10 54194338    (2021 RL5)    Not Potentially H~      25.8
-    ## # ... with 107 more rows, and 13 more variables:
-    ## #   sentry_object <fct>, est_diameter_km_min <dbl>,
+    ##    Asteroid_ID Asteroid_Name
+    ##    <chr>       <chr>        
+    ##  1 3398088     (2007 YF)    
+    ##  2 3703059     (2014 YE15)  
+    ##  3 3781268     (2017 QV34)  
+    ##  4 54185136    (2021 PF10)  
+    ##  5 54186661    (2021 PO26)  
+    ##  6 54191249    (2021 QK3)   
+    ##  7 54192179    (2021 QK6)   
+    ##  8 54192187    (2021 RN1)   
+    ##  9 54193341    (2021 RU3)   
+    ## 10 54194338    (2021 RL5)   
+    ## # ... with 107 more rows, and 15 more
+    ## #   variables:
+    ## #   potentially_hazardous <fct>,
+    ## #   magnitude <dbl>, sentry_object <fct>,
+    ## #   est_diameter_km_min <dbl>,
     ## #   est_diameter_km_max <dbl>,
-    ## #   est_diameter_meter_min <dbl>,
-    ## #   est_diameter_meter_max <dbl>,
-    ## #   est_diameter_miles_min <dbl>,
-    ## #   est_diameter_miles_max <dbl>, ...
+    ## #   est_diameter_meter_min <dbl>, ...
 
 # contingeny tables
 
@@ -302,7 +302,7 @@ astsumcall <- function(x){asteroiddata3 %>%
               "Max" = max(x),
               "Std. Dev" = sd(x),
               "IQR" = IQR(x))
-}
+  }
 
 asteroidstats <- astsumcall(asteroiddata3$est_diameter_meter_max)
 
@@ -327,7 +327,7 @@ BPH <- ggplot(data = asteroiddata3, aes(x = potentially_hazardous, y = est_diame
 BPH
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
 
 ## Boxplot size of asteroids grouped by hazard status
 
@@ -338,7 +338,7 @@ BPH <- ggplot(data = asteroiddata3, aes(x = damage_est, y = est_diameter_meter_m
 BPH
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
 
 ## Bar chart showing grouping of damag potetial observed
 
@@ -349,7 +349,7 @@ BCD <- ggplot(data = asteroiddata3, aes(y = damage_est)) + geom_bar(aes(fill = a
 BCD
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
 
 ## visualization
 
@@ -360,7 +360,7 @@ BCP <- ggplot(data = asteroiddata3, aes(y = est_diameter_meter_max, x = damage_e
 BCP
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
 
 ## scatterplot
 
@@ -371,7 +371,7 @@ ASCT <- ggplot(data = asteroiddata3, aes(y = potentially_hazardous, x = damage_e
 ASCT
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
 
 # correlation
 
@@ -386,4 +386,4 @@ CDRE <- ggplot(data = asteroiddata3, aes(y = magnitude, x = est_diameter_meter_m
 CDRE
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
