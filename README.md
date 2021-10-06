@@ -5,7 +5,7 @@ Dave Bergeron
 
 # Requirements
 
-List of functions used with NASA API, I used the following packages:
+List of functions used with NASA NEO API, I used the following packages:
 
 -   `tidyverse`: tons of useful features for data manipulation and
     visualization
@@ -14,17 +14,28 @@ List of functions used with NASA API, I used the following packages:
 In addition to those packages, I used the following packages in the rest
 of the document:
 
--   `httr`: extra functionality for `ggplot2`  
--   `dplyr`: loading in images  
--   `ggplot`: tidying up a regression output for display
--   `purrr`: displaying tables in a markdown friendly way
--   `haven`
--   `lubriate`
--   `janitor`
+-   `httr`: useful tools for Working with URLs and HTTP  
+-   `dplyr`: A fast, consistent tool for working with data frame like
+    objects, both in memory and out of memory.  
+-   `ggplot`: A system for ‘declaratively’ creating graphics, based on
+    “The Grammar of Graphics”
+-   `purrr`: A complete and consistent functional programming toolkit
+    for R
+-   `lubriate`: consistent and memorable syntax that makes working with
+    dates easy and fun
+-   `janitor`: simple functions for examining and cleaning dirty data
+
+# Intro
+
+This project was super fun, I had no idea what to expect when starting
+it, but as I immeresed myself in the world of API’s, I became enthralled
+with the data I was compliling.
+
+<img src="asteroid.PNG" width="1110" />
 
 # Functions to contact API and inspect data
 
-xxxx
+The function below is used to query the NASA NEO API.
 
 ``` r
 asteroidcall <- function(start_date, end_date){GET(url = "https://api.nasa.gov/neo/rest/v1/feed?",
@@ -70,7 +81,7 @@ observation column
 
 ``` r
 asteroiddata = fromJSON(rawToChar(asteroid$content), flatten = TRUE)
-asteroiddata2 <- do.call("rbind", asteroiddata$near_earth_objects) %>% rbind(asteroiddata$close_approach_data)
+asteroiddata2 <- do.call("rbind", asteroiddata$near_earth_objects)
 asteroiddata2 <- subset(asteroiddata2, select = -c(neo_reference_id, links.self, close_approach_data))
 asteroiddata2 <- asteroiddata2[ ,c(1,2,5,4,6,7,8,9,10,11,12,13,14,3)]
 ```
@@ -141,25 +152,25 @@ asteroiddata2
 ```
 
     ## # A tibble: 117 x 16
-    ##    Asteroid_ID Asteroid_Name
-    ##    <chr>       <chr>        
-    ##  1 3398088     (2007 YF)    
-    ##  2 3703059     (2014 YE15)  
-    ##  3 3781268     (2017 QV34)  
-    ##  4 54185136    (2021 PF10)  
-    ##  5 54186661    (2021 PO26)  
-    ##  6 54191249    (2021 QK3)   
-    ##  7 54192179    (2021 QK6)   
-    ##  8 54192187    (2021 RN1)   
-    ##  9 54193341    (2021 RU3)   
-    ## 10 54194338    (2021 RL5)   
-    ## # ... with 107 more rows, and
-    ## #   14 more variables:
-    ## #   potentially_hazardous <fct>,
-    ## #   magnitude <dbl>,
+    ##    Asteroid_ID Asteroid_Name potentially_hazard~
+    ##    <chr>       <chr>         <fct>              
+    ##  1 3398088     (2007 YF)     Not Potentially Ha~
+    ##  2 3703059     (2014 YE15)   Not Potentially Ha~
+    ##  3 3781268     (2017 QV34)   Potentially Hazard~
+    ##  4 54185136    (2021 PF10)   Not Potentially Ha~
+    ##  5 54186661    (2021 PO26)   Not Potentially Ha~
+    ##  6 54191249    (2021 QK3)    Not Potentially Ha~
+    ##  7 54192179    (2021 QK6)    Not Potentially Ha~
+    ##  8 54192187    (2021 RN1)    Not Potentially Ha~
+    ##  9 54193341    (2021 RU3)    Not Potentially Ha~
+    ## 10 54194338    (2021 RL5)    Not Potentially Ha~
+    ## # ... with 107 more rows, and 13 more
+    ## #   variables: magnitude <dbl>,
     ## #   sentry_object <fct>,
     ## #   est_diameter_km_min <dbl>,
-    ## #   est_diameter_km_max <dbl>, ...
+    ## #   est_diameter_km_max <dbl>,
+    ## #   est_diameter_meter_min <dbl>,
+    ## #   est_diameter_meter_max <dbl>, ...
 
 ## 2nd endpoint call
 
@@ -190,25 +201,25 @@ asteroiddata3
 ```
 
     ## # A tibble: 117 x 17
-    ##    Asteroid_ID Asteroid_Name
-    ##    <chr>       <chr>        
-    ##  1 3398088     (2007 YF)    
-    ##  2 3703059     (2014 YE15)  
-    ##  3 3781268     (2017 QV34)  
-    ##  4 54185136    (2021 PF10)  
-    ##  5 54186661    (2021 PO26)  
-    ##  6 54191249    (2021 QK3)   
-    ##  7 54192179    (2021 QK6)   
-    ##  8 54192187    (2021 RN1)   
-    ##  9 54193341    (2021 RU3)   
-    ## 10 54194338    (2021 RL5)   
-    ## # ... with 107 more rows, and
-    ## #   15 more variables:
-    ## #   potentially_hazardous <fct>,
-    ## #   magnitude <dbl>,
+    ##    Asteroid_ID Asteroid_Name potentially_hazard~
+    ##    <chr>       <chr>         <fct>              
+    ##  1 3398088     (2007 YF)     Not Potentially Ha~
+    ##  2 3703059     (2014 YE15)   Not Potentially Ha~
+    ##  3 3781268     (2017 QV34)   Potentially Hazard~
+    ##  4 54185136    (2021 PF10)   Not Potentially Ha~
+    ##  5 54186661    (2021 PO26)   Not Potentially Ha~
+    ##  6 54191249    (2021 QK3)    Not Potentially Ha~
+    ##  7 54192179    (2021 QK6)    Not Potentially Ha~
+    ##  8 54192187    (2021 RN1)    Not Potentially Ha~
+    ##  9 54193341    (2021 RU3)    Not Potentially Ha~
+    ## 10 54194338    (2021 RL5)    Not Potentially Ha~
+    ## # ... with 107 more rows, and 14 more
+    ## #   variables: magnitude <dbl>,
     ## #   sentry_object <fct>,
     ## #   est_diameter_km_min <dbl>,
-    ## #   est_diameter_km_max <dbl>, ...
+    ## #   est_diameter_km_max <dbl>,
+    ## #   est_diameter_meter_min <dbl>,
+    ## #   est_diameter_meter_max <dbl>, ...
 
 # contingeny tables
 
@@ -282,16 +293,21 @@ table(asteroiddata3$damage_est, asteroiddata2$potentially_hazardous, asteroiddat
 xxxxx
 
 ``` r
-asteroidstats <- asteroiddata2 %>% summarise("Min." = min(est_diameter_meter_max),
-                            "1st Quartile" = quantile(est_diameter_meter_max, 0.25),
-                            "Median" = quantile(est_diameter_meter_max, 0.5),
-                            "Mean" = mean(est_diameter_meter_max),
-                            "3rd Quartile" = quantile(est_diameter_meter_max, 0.75),
-                            "Max" = max(est_diameter_meter_max),
-                            "Std. Dev" = sd(est_diameter_meter_max),
-                            "IQR" = IQR(asteroiddata2$est_diameter_meter_max))
+astsumcall <- function(x){asteroiddata3 %>%
+    summarise("Min." = min(x),
+              "1st Quartile" = quantile(x, 0.25),
+              "Median" = quantile(x, 0.5),
+              "Mean" = mean(x),
+              "3rd Quartile" = quantile(x, 0.75),
+              "Max" = max(x),
+              "Std. Dev" = sd(x),
+              "IQR" = IQR(x))
+}
+
+asteroidstats <- astsumcall(asteroiddata3$est_diameter_meter_max)
+
 knitr::kable(asteroidstats, 
-             caption="Summary Statistics of Estimated Maximum Diameter in Meters of Asteroids Observed during the Specified Timefram",
+             caption="Summary Statistics of Estimated Maximum Diameter of Asteroids Observed during the Specified Timeframe",
              digits=2)
 ```
 
@@ -299,8 +315,8 @@ knitr::kable(asteroidstats,
 |-----:|-------------:|-------:|-------:|-------------:|--------:|---------:|-------:|
 | 2.72 |        43.06 |  72.12 | 161.69 |       164.98 | 2041.93 |   269.48 | 121.93 |
 
-Summary Statistics of Estimated Maximum Diameter in Meters of Asteroids
-Observed during the Specified Timefram
+Summary Statistics of Estimated Maximum Diameter of Asteroids Observed
+during the Specified Timeframe
 
 # Visualisations
 
@@ -311,7 +327,7 @@ BPH <- ggplot(data = asteroiddata3, aes(x = potentially_hazardous, y = est_diame
 BPH
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-74-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
 
 ## Boxplot size of asteroids grouped by hazard status
 
@@ -322,7 +338,7 @@ BPH <- ggplot(data = asteroiddata3, aes(x = damage_est, y = est_diameter_meter_m
 BPH
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-75-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
 
 ## Bar chart showing grouping of damag potetial observed
 
@@ -333,7 +349,7 @@ BCD <- ggplot(data = asteroiddata3, aes(y = damage_est)) + geom_bar(aes(fill = a
 BCD
 ```
 
-![](README_files/figure-gfm/barchart-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
 
 ## visualization
 
@@ -344,20 +360,30 @@ BCP <- ggplot(data = asteroiddata3, aes(y = est_diameter_meter_max, x = damage_e
 BCP
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-76-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
 
-## sentry data visualisation
+## scatterplot
 
 xxxx
 
 ``` r
-ASER <- ggplot(data = asteroiddata3, aes(est_diameter_meter_max, est_diameter_meter_min)) + geom_violin(aes(scale(diameter_range))) + guides(x=guide_axis(angle=90))
-ASER
+ASCT <- ggplot(data = asteroiddata3, aes(y = potentially_hazardous, x = damage_est)) + geom_jitter(aes(alpha = .75, color = damage_est)) + labs(y = "Estimated Diameter in Meters") + guides(x=guide_axis(angle=45))
+ASCT
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-77-1.png)<!-- --> \#
-correlation
+![](README_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
 
-xxx
+# correlation
 
-![](README_files/figure-gfm/corr%20between%20damage%20and%20range-1.png)<!-- -->
+Inverse realationship, as the asteroid gets larger the magnitude gets
+smaller. The lower the magnitude the birghter the object. This suggests
+the larger an asteroid the brighter it is. This also shows of the
+observed asteroids in the timeframe. The more luminous an object, the
+smaller the numerical value of its magnitude.
+
+``` r
+CDRE <- ggplot(data = asteroiddata3, aes(y = magnitude, x = est_diameter_meter_max)) + geom_point(aes(color = magnitude), position = "jitter") + geom_smooth(formula = y ~ x, method = "loess") + labs(x = "Asteroid Diameter in Meters", y = "Magnitude", title="Asteroid Diameter vs Magnitude") 
+CDRE
+```
+
+![](README_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
