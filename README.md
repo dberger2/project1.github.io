@@ -3,7 +3,7 @@ NASA Near Earth Orbit Asteroid Analysis API
 Dave Bergeron
 9/30/2021
 
-# Requirements
+# 1 Requirements
 
 List of functions used with NASA NEO API, I used the following packages:
 
@@ -25,7 +25,7 @@ of the document:
     dates easy and fun
 -   `janitor`: simple functions for examining and cleaning dirty data
 
-# 1 Introduction
+# 2 Introduction
 
 This project was super fun, I had no idea what to expect when starting
 it, but as I immersed myself in the world of API’s, I became enthralled
@@ -43,7 +43,7 @@ be okay.
 
 <img src="_pics/asteroid.PNG" width="1110" />
 
-# 2 Function to contact API and Inspect the Data
+# 3 Function to contact API and Inspect the Data
 
 The `asteroidcall` function below is used to query the NASA NEO API. As
 mentioned above, it only accepts three parameters (start\_date,
@@ -86,7 +86,7 @@ asteroidcall("1998-09-27", "1998-10-02")
     ##   Content-Type: application/json;charset=UTF-8
     ##   Size: 133 kB
 
-## 2.1 Converting thedata in the API Call to Tibble
+## 3.1 Converting the data in the API Call to Tibble
 
 It is a fairly laborious process to get the data from the API call into
 a usable data frame/tibble. Each day queried returns its own data frame.
@@ -104,10 +104,10 @@ asteroiddata2 <- subset(asteroiddata2, select = -c(neo_reference_id, links.self,
 asteroiddata2 <- asteroiddata2[ ,c(1,2,5,4,6,7,8,9,10,11,12,13,14,3)]
 ```
 
-## 2.2 Renaming the Columns
+## 3.2 Renaming the Columns
 
 At this point, we have a usable data frame to start cleaning up a bit
-more. Some of the columne names were a bit long, so the following code
+more. Some of the column names were a bit long, so the following code
 was used to turn them into something a little more readable.
 
 ``` r
@@ -127,7 +127,7 @@ asteroiddata2 <- as_tibble(plyr::rename(asteroiddata2, c(
   "estimated_diameter.feet.estimated_diameter_max" = "est_diameter_feet_max")))
 ```
 
-## 2.3 Adding levels to Two Columns
+## 3.3 Adding levels to Two Columns
 
 Two of the columns returned true/false values, so changing those to
 names that were easier to understand the context was done in this step.
@@ -141,7 +141,7 @@ asteroiddata2$sentry_object <- as.factor(asteroiddata2$sentry_object)
   levels(asteroiddata2$sentry_object) <- c('No','Yes')
 ```
 
-## 2.4 Adding first new variable - `damage est`
+## 3.4 Adding first new variable - `damage est`
 
 A number of the columns in the data frame give information on the
 estimated size of the asteroids returned in the API call. I was able to
@@ -161,7 +161,7 @@ asteroiddata2 <- asteroiddata2 %>%
                                                                                         if_else(asteroiddata2$est_diameter_meter_max <= 10000, "Large Global Effect", "Extinction Event",)))))))
 ```
 
-## 2.5 Adding second new variable `diameter range`
+## 3.5 Adding second new variable `diameter range`
 
 A second new variable was added to the data frame. The data provided by
 the API gives an estimated maximum diameter in meters and an estimated
@@ -173,7 +173,7 @@ estimations are.
 asteroiddata2 <- as_tibble(asteroiddata2)%>% mutate(diameter_range = asteroiddata2$est_diameter_meter_max - asteroiddata2$est_diameter_meter_min)
 ```
 
-## 2.6 The final tibble after data wrangling
+## 3.6 The final tibble after data wrangling
 
 And here we are, after all the wrangling we end up with a useful tibble
 to base our analysis from and work with!
@@ -203,7 +203,7 @@ asteroiddata2
     ## #   est_diameter_km_min <dbl>,
     ## #   est_diameter_km_max <dbl>, ...
 
-# 3 Second API Endpoint Call
+# 4 Second API Endpoint Call
 
 Given some of the limitations as stated above with the search parameters
 I did see if there was another relevant API to query. I did come across
@@ -227,11 +227,11 @@ removedsentry <- removedsentry %>%
   matrix(ncol = 2, byrow = TRUE) %>%
   as_tibble() %>%
   janitor::row_to_names(row_number = 1)
-removedsentry <- as_tibble(plyr::rename(removedsentry, c("2836" = "Asteroid_Name",
+removedsentry <- as_tibble(plyr::rename(removedsentry, c("2837" = "Asteroid_Name",
   "NASA/JPL Sentry Data API" = "Date_Removed")))
 ```
 
-# 3.1 Table join
+# 5 Table join
 
 With the headers from the second API call updated, I was able to join
 the tibbles from the first and second API calls using a `left_join()`.
@@ -268,9 +268,9 @@ asteroiddata3
     ## #   est_diameter_km_min <dbl>,
     ## #   est_diameter_km_max <dbl>, ...
 
-# 4 Contingeny Tables
+# 6 Contingeny Tables
 
-## 4.1 Two-way Contingency Tables
+## 6.1 Two-way Contingency Table
 
 The two-way contingency table below shows the count of asteroids that
 are potentially hazardous vs. no potentially hazardous and the damage
@@ -294,7 +294,7 @@ knitr::kable(table(asteroiddata3$damage_est, asteroiddata2$potentially_hazardous
 Potentially vs Non-Potentially Hazardous Asteroids by destruction
 potetial
 
-## 4.2 Three-Way Contingency Table
+## 6.2 Three-Way Contingency Table
 
 The three-way contingency table below takes what was provided above in
 the two-way table and further categorizes based on if the asteroids were
@@ -339,7 +339,7 @@ table(asteroiddata3$damage_est, asteroiddata2$potentially_hazardous, asteroiddat
     ##   Medium Global Effect                       0
     ##   Regional Event                             0
 
-\#5 Summary Statistics
+# 7 Summary Statistics
 
 The function below was written to provide summary statistics for the
 estimated asteroid diameters in the table. The user can specify if they
@@ -374,9 +374,9 @@ knitr::kable(asteroidstats,
 Summary Statistics of Estimated Maximum Diameter of Asteroids Observed
 during the Specified Timeframe
 
-\#6 Visualisations
+# 8 Visualisations
 
-\#\#6.1 Boxplotes grouped by hazardous, non hazardous
+## 8.1 Boxplotes grouped by hazardous, non hazardous
 
 This plot shows the box plots for estimated maximum diameter in meters
 and groups them by whether or not the asteroids are hazardous.
@@ -386,9 +386,9 @@ BPH <- ggplot(data = asteroiddata3, aes(x = potentially_hazardous, y = est_diame
 BPH
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-27-1.png)<!-- -->
 
-\#\#6.2 Boxplot size of asteroids grouped by Damage Potential
+## 8.2 Boxplot size of asteroids grouped by Damage Potential
 
 Another boxplot was created this time grouping the size of the asteroids
 by the damage they could inflict if they impacted Earth.
@@ -398,9 +398,9 @@ BPH <- ggplot(data = asteroiddata3, aes(x = damage_est, y = est_diameter_meter_m
 BPH
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-28-1.png)<!-- -->
 
-\#\#6.3 Bar chart showing grouping of damag potetial observed
+## 8.3 Bar chart showing grouping of damag potetial observed
 
 The bar chart shows the count of asteroids categorized by the damage
 they could inflict if they impacted Earth and if they are considered
@@ -411,9 +411,9 @@ BCD <- ggplot(data = asteroiddata3, aes(y = damage_est)) + geom_bar(aes(fill = a
 BCD
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-29-1.png)<!-- -->
 
-\#\#6.4 Scatterplot Hazard and Damage Potential
+## 8.4 Scatterplot Hazard and Damage Potential
 
 The scatter plot shows the clustering of asteroids by whether they are
 hazardous and the damage they could inflict if they impacted Earth.
@@ -423,9 +423,9 @@ ASCT <- ggplot(data = asteroiddata3, aes(y = potentially_hazardous, x = damage_e
 ASCT
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-30-1.png)<!-- -->
 
-\#6.5 Correlation Size and Magnitude
+## 8.5 Correlation Size and Magnitude
 
 This chart examines the correlation between an asteroids size and its
 brightness. NASA and JPL use the term `absolute magnitude` to determine
@@ -442,4 +442,4 @@ CDRE <- ggplot(data = asteroiddata3, aes(y = magnitude, x = est_diameter_meter_m
 CDRE
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-31-1.png)<!-- -->

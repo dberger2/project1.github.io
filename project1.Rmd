@@ -25,7 +25,7 @@ library(lubridate)
 library(janitor)
 ```
 
-# Requirements
+# 1 Requirements
 
 List of functions used with NASA NEO API, I used the following packages:
 
@@ -41,7 +41,7 @@ In addition to those packages, I used the following packages in the rest of the 
 * `lubriate`: consistent and memorable syntax that makes working with dates easy and fun
 * `janitor`: simple functions for examining and cleaning dirty data
 
-# 1 Introduction
+# 2 Introduction
 
 This project was super fun, I had no idea what to expect when starting it, but as I immersed myself in the world of API's, I became enthralled with the data I was compiling.  I ended up using the NASA Near Earth Object Web Service.  The API i called was very limited in its search parameters (only three, start date, end date, and API key).  Additionally, the API only allows you to pull seven days per call.  All that being said, it did return a lot of interesting information which I was able to wrangle into some useful tables and visualizations.
 
@@ -51,7 +51,7 @@ The crux of the analysis speaks to how much damage and asteroid could do to the 
 knitr::include_graphics("_pics/asteroid.PNG")
 ```
 
-# 2 Function to contact API and Inspect the Data
+# 3 Function to contact API and Inspect the Data
 
 The `asteroidcall` function below is used to query the NASA NEO API.  As mentioned above, it only accepts three parameters (start_date, end_date, and api_key).  Given a `demo_key` can be used for the API, the user only needs to enter the start and end dates of the seven day period they would like to pull data from.
 
@@ -69,7 +69,7 @@ asteroidcall <- function(start_date, end_date){GET(url = "https://api.nasa.gov/n
 asteroidcall("1998-09-27", "1998-10-02")
 ```
 
-## 2.1 Converting thedata in the API Call to Tibble
+## 3.1 Converting the data in the API Call to Tibble
 
 It is a fairly laborious process to get the data from the API call into a usable data frame/tibble.  Each day queried returns its own data frame.  This requires all the data frames being combined into one.  Luckily the columns are all the same.  Once the `JSON` conversion is complete, `do.call` is required to combine all the data frames into one.  There are three columns which are not usable or of value so the `subset()` function was used to remove them.  The final step was ordering the columns into something a bit more user friendly.
 
@@ -81,9 +81,9 @@ asteroiddata2 <- asteroiddata2[ ,c(1,2,5,4,6,7,8,9,10,11,12,13,14,3)]
 ```
 
 
-## 2.2 Renaming the Columns
+## 3.2 Renaming the Columns
 
-At this point, we have a usable data frame to start cleaning up a bit more.  Some of the columne names were a bit long, so the following code was used to turn them into something a little more readable.
+At this point, we have a usable data frame to start cleaning up a bit more.  Some of the column names were a bit long, so the following code was used to turn them into something a little more readable.
 
 ```{r rename columns, r asteroid data, echo=TRUE, eval=TRUE, error=FALSE, message=FALSE}
 asteroiddata2 <- as_tibble(plyr::rename(asteroiddata2, c(
@@ -103,7 +103,7 @@ asteroiddata2 <- as_tibble(plyr::rename(asteroiddata2, c(
 ```
 
 
-## 2.3 Adding levels to Two Columns
+## 3.3 Adding levels to Two Columns
 
 Two of the columns returned true/false values, so changing those to names that were easier to understand the context was done in this step.  This enabled a better understanding of the visualizations further down in the project.
 
@@ -115,7 +115,7 @@ asteroiddata2$sentry_object <- as.factor(asteroiddata2$sentry_object)
 ```
 
 
-## 2.4 Adding first new variable - `damage est`
+## 3.4 Adding first new variable - `damage est`
 
 A number of the columns in the data frame give information on the estimated size of the asteroids returned in the API call.  I was able to find some information which provided the level of damage an asteroid could do to Earth if it were to impact the planet based on its diameter in meters.  The code below created a new categorical variable and applies the different damage classifications based on the diameter of the asteroid in meters.
 
@@ -129,7 +129,7 @@ asteroiddata2 <- asteroiddata2 %>%
                                                                                         if_else(asteroiddata2$est_diameter_meter_max <= 10000, "Large Global Effect", "Extinction Event",)))))))
 ```
 
-## 2.5  Adding second new variable `diameter range`
+## 3.5  Adding second new variable `diameter range`
 
 A second new variable was added to the data frame.  The data provided by the API gives an estimated maximum diameter in meters and an estimated minimum in meters.  This new variable provides the range between the max and min estimate, for comparison, and to see how distant some of the estimations are.
 
@@ -138,7 +138,7 @@ asteroiddata2 <- as_tibble(asteroiddata2)%>% mutate(diameter_range = asteroiddat
 ```
 
 
-## 2.6 The final tibble after data wrangling
+## 3.6 The final tibble after data wrangling
 
 And here we are, after all the wrangling we end up with a useful tibble to base our analysis from and work with!
 
@@ -147,7 +147,7 @@ asteroiddata2
 ```
 
 
-# 3 Second API Endpoint Call
+# 4 Second API Endpoint Call
 
 Given some of the limitations as stated above with the search parameters I did see if there was another relevant API to query.  I did come across one administered by the Jet Propulsion Laboratory.  This one enabled me to pull a list of asteroids that have been removed from the NASA Sentry List.  The Sentry List identifies all asteroids which pose a somewhat relevant threat to Earth.  There were no parameters to specifically query for this API, other than to see what asteroids were removed from the list.
 
@@ -163,11 +163,11 @@ removedsentry <- removedsentry %>%
   matrix(ncol = 2, byrow = TRUE) %>%
   as_tibble() %>%
   janitor::row_to_names(row_number = 1)
-removedsentry <- as_tibble(plyr::rename(removedsentry, c("2836" = "Asteroid_Name",
+removedsentry <- as_tibble(plyr::rename(removedsentry, c("2837" = "Asteroid_Name",
   "NASA/JPL Sentry Data API" = "Date_Removed")))
 ```
 
-# 3.1 Table join
+# 5 Table join
 
 With the headers from the second API call updated, I was able to join the tibbles from the first and second API calls using a `left_join()`.  This enabled the addition of a column to see if any of the asteroids in the tibble were previously on the Senty List and what date they were removed.  This provided a nice addition to data, given the NEO API already provides a column stating if the asteroid is currently on the Sentry list.  The Tibble below is the final tibble to start conducting analysis from for the rest of the project.
 
@@ -176,9 +176,9 @@ asteroiddata3 <- left_join(asteroiddata2, removedsentry, by = "Asteroid_Name")
 asteroiddata3
 ```
 
-# 4 Contingeny Tables
+# 6 Contingeny Tables
 
-## 4.1 Two-way Contingency Tables
+## 6.1 Two-way Contingency Table
 
 The two-way contingency table below shows the count of asteroids that are potentially hazardous vs. no potentially hazardous and the damage they could inflict if they were to impact the Earth.  For this timeframe, there were two that were potentially hazardous that would have resulted in a Medium Global event.
 
@@ -188,7 +188,7 @@ knitr::kable(table(asteroiddata3$damage_est, asteroiddata2$potentially_hazardous
 ```
 
 
-## 4.2 Three-Way Contingency Table
+## 6.2 Three-Way Contingency Table
 
 The three-way contingency table below takes what was provided above in the two-way table and further categorizes based on if the asteroids were on the Sentry list or not.  As a reminder, the Sentry list are the asteroids NASA is keeping a close watch on.  Luckily none of them were!
 
@@ -196,7 +196,7 @@ The three-way contingency table below takes what was provided above in the two-w
 table(asteroiddata3$damage_est, asteroiddata2$potentially_hazardous, asteroiddata2$sentry_object)
 ```
 
-#5 Summary Statistics
+# 7 Summary Statistics
 
 The function below was written to provide summary statistics for the estimated asteroid diameters in the table.  The user can specify if they want to see summaries for Kilometers, Meters, Miles, or Feet.  I made a few attempts to try and simplify the function parameters, but ultimately the tibble object and associated column name need to be used for the function to work properly.
 
@@ -221,9 +221,9 @@ knitr::kable(asteroidstats,
 
 ```
 
-#6 Visualisations
+# 8 Visualisations
 
-##6.1 Boxplotes grouped by hazardous, non hazardous
+## 8.1 Boxplotes grouped by hazardous, non hazardous
 
 This plot shows the box plots for estimated maximum diameter in meters and groups them by whether or not the asteroids are hazardous.
 
@@ -233,7 +233,7 @@ BPH
 ```
 
 
-##6.2 Boxplot size of asteroids grouped by Damage Potential
+## 8.2 Boxplot size of asteroids grouped by Damage Potential
 
 Another boxplot was created this time grouping the size of the asteroids by the damage they could inflict if they impacted Earth.
 
@@ -243,7 +243,7 @@ BPH
 ```
 
 
-##6.3 Bar chart showing grouping of damag potetial observed
+## 8.3 Bar chart showing grouping of damag potetial observed
 
 The bar chart shows the count of asteroids categorized by the damage they could inflict if they impacted Earth and if they are considered potentially hazardous.
 
@@ -252,7 +252,7 @@ BCD <- ggplot(data = asteroiddata3, aes(y = damage_est)) + geom_bar(aes(fill = a
 BCD
 ```
 
-##6.4 Scatterplot Hazard and Damage Potential
+## 8.4 Scatterplot Hazard and Damage Potential
 
 The scatter plot shows the clustering of asteroids by whether they are hazardous and the damage they could inflict if they impacted Earth.
 
@@ -261,7 +261,7 @@ ASCT <- ggplot(data = asteroiddata3, aes(y = potentially_hazardous, x = damage_e
 ASCT
 ```
 
-#6.5 Correlation Size and Magnitude
+## 8.5 Correlation Size and Magnitude
 
 This chart examines the correlation between an asteroids size and its brightness.  NASA and JPL use the term `absolute magnitude` to determine how bright a celestial object is.  The lower the magnitude, the brighter the object, or put another way, the more luminous an object, the smaller the numerical value of its magnitude.  The chart below shows the larger an asteroid is, the brighter it is.  Looking at some research online, this makes sense, and probably also explains why other planets in the solar system look like really bright stars when we can see them in the sky at night.
 
