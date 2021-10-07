@@ -60,7 +60,7 @@ The `asteroidcall` function below is used to query the NASA NEO API.  As mention
 asteroidcall <- function(start_date, end_date){GET(url = "https://api.nasa.gov/neo/rest/v1/feed?",
                   query = list(
                     start_date = start_date,
-                    end_date = start_date,
+                    end_date = end_date,
                     api_key = "DEMO_KEY",
   str(asteroid, max.level = 1)))
   return(asteroid)

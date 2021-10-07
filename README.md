@@ -57,7 +57,7 @@ time frame of late September to early October 1998 was pulled.
 asteroidcall <- function(start_date, end_date){GET(url = "https://api.nasa.gov/neo/rest/v1/feed?",
                   query = list(
                     start_date = start_date,
-                    end_date = start_date,
+                    end_date = end_date,
                     api_key = "DEMO_KEY",
   str(asteroid, max.level = 1)))
   return(asteroid)
@@ -402,7 +402,7 @@ BPH <- ggplot(data = asteroiddata3, aes(x = potentially_hazardous, y = est_diame
 BPH
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-27-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-25-1.png)<!-- -->
 
 ## 8.2 Boxplot size of asteroids grouped by `Damage Potential`
 
@@ -414,7 +414,7 @@ BPH <- ggplot(data = asteroiddata3, aes(x = damage_est, y = est_diameter_meter_m
 BPH
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-28-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-26-1.png)<!-- -->
 
 ## 8.3 Bar chart showing counts of `Damage Potential` and `Hazard Category`
 
@@ -427,7 +427,7 @@ BCD <- ggplot(data = asteroiddata3, aes(y = damage_est)) + geom_bar(aes(fill = a
 BCD
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-29-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-27-1.png)<!-- -->
 
 ## 8.4 Scatterplot Groups by `Hazard Potential` and `Damage Potential`
 
@@ -439,7 +439,7 @@ ASCT <- ggplot(data = asteroiddata3, aes(y = potentially_hazardous, x = damage_e
 ASCT
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-30-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-28-1.png)<!-- -->
 
 ## 8.5 Correlation of `Asteroid Diameter` and `Magnitude`
 
@@ -458,4 +458,4 @@ CDRE <- ggplot(data = asteroiddata3, aes(y = magnitude, x = est_diameter_meter_m
 CDRE
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-31-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-29-1.png)<!-- -->
