@@ -392,7 +392,7 @@ during the Specified Timeframe
 
 # 8 Visualisations
 
-## 8.1 Boxplotes of asteroid size grouped by hazardous / non hazardous
+## 8.1 Boxplotes of `asteroid size` grouped by `hazardous` / `non-hazardous`
 
 This plot shows the box plots for `estimated maximum diameter in meters`
 and groups them by whether or not the asteroids are `hazardous`.
@@ -402,7 +402,7 @@ BPH <- ggplot(data = asteroiddata3, aes(x = potentially_hazardous, y = est_diame
 BPH
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-47-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
 
 ## 8.2 Boxplot size of asteroids grouped by `Damage Potential`
 
@@ -414,9 +414,9 @@ BPH <- ggplot(data = asteroiddata3, aes(x = damage_est, y = est_diameter_meter_m
 BPH
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-48-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
 
-## 8.3 Bar chart showing grouping of `damag potetial`
+## 8.3 Bar chart showing counts of `Damage Potetial` and `Hazard Category`
 
 The bar chart shows the count of asteroids categorized by the `damage`
 they could inflict if they impacted Earth and if they are considered
@@ -427,7 +427,7 @@ BCD <- ggplot(data = asteroiddata3, aes(y = damage_est)) + geom_bar(aes(fill = a
 BCD
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-49-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
 
 ## 8.4 Scatterplot Groups by `Hazard Potential` and `Damage Potential`
 
@@ -439,9 +439,9 @@ ASCT <- ggplot(data = asteroiddata3, aes(y = potentially_hazardous, x = damage_e
 ASCT
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-50-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
 
-## 8.5 Correlation of Asteroid Diameter and Magnitude
+## 8.5 Correlation of `Asteroid Diameter` and `Magnitude`
 
 This chart examines the correlation between an asteroids `size` and its
 `brightness`. NASA and JPL use the term `absolute magnitude` to
@@ -458,4 +458,4 @@ CDRE <- ggplot(data = asteroiddata3, aes(y = magnitude, x = est_diameter_meter_m
 CDRE
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-51-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->

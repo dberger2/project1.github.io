@@ -235,7 +235,7 @@ knitr::kable(asteroidstats,
 
 # 8 Visualisations
 
-## 8.1 Boxplotes of asteroid size grouped by hazardous / non hazardous
+## 8.1 Boxplotes of `asteroid size` grouped by `hazardous` / `non-hazardous`
 
 This plot shows the box plots for `estimated maximum diameter in meters` and groups them by whether or not the asteroids are `hazardous`.
 
@@ -255,7 +255,7 @@ BPH
 ```
 
 
-## 8.3 Bar chart showing grouping of `damag potetial`
+## 8.3 Bar chart showing counts of `Damage Potetial` and `Hazard Category`
 
 The bar chart shows the count of asteroids categorized by the `damage` they could inflict if they impacted Earth and if they are considered `potentially hazardous`.
 
@@ -273,7 +273,7 @@ ASCT <- ggplot(data = asteroiddata3, aes(y = potentially_hazardous, x = damage_e
 ASCT
 ```
 
-## 8.5 Correlation of Asteroid Diameter and Magnitude
+## 8.5 Correlation of `Asteroid Diameter` and `Magnitude`
 
 This chart examines the correlation between an asteroids `size` and its `brightness`.  NASA and JPL use the term `absolute magnitude` to determine how bright a celestial object is.  The lower the magnitude, the brighter the object, or put another way, the more luminous an object, the smaller the numerical value of its magnitude.  The chart below shows the larger an asteroid is, the brighter it is.  Looking at some research online, this makes sense, and probably also explains why other planets in the solar system look like really bright stars when we can see them in the sky at night.
 
