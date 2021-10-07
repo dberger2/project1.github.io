@@ -143,7 +143,7 @@ asteroiddata2$sentry_object <- as.factor(asteroiddata2$sentry_object)
   levels(asteroiddata2$sentry_object) <- c('No','Yes')
 ```
 
-## 3.4 Adding a categorical variable - `damage est`
+## 3.4 Adding a categorical variable - `Damage Estimate`
 
 A number of the columns in the data frame give information on the
 estimated size of the asteroids returned in the API call. I was able to
@@ -173,7 +173,7 @@ asteroiddata2 <- asteroiddata2 %>%
                                                                                         if_else(asteroiddata2$est_diameter_meter_max <= 10000, "Large Global Effect", "Extinction Event",)))))))
 ```
 
-## 3.5 Adding a new continuous variable `diameter range`
+## 3.5 Adding a new continuous variable `Diameter Range`
 
 A second variable was added to the data frame. The data provided by the
 API gives an estimated maximum diameter in meters and an estimated

@@ -115,7 +115,7 @@ asteroiddata2$sentry_object <- as.factor(asteroiddata2$sentry_object)
 ```
 
 
-## 3.4 Adding a categorical variable - `damage est`
+## 3.4 Adding a categorical variable - `Damage Estimate`
 
 A number of the columns in the data frame give information on the estimated size of the asteroids returned in the API call.  I was able to find some information which provided the level of damage an asteroid could inflict on Earth if it were to impact the planet based on the asteroids `diameter in meters`.  The code below created a new categorical variable and applies the different damage classifications based on the estimated diameter of the asteroid in meters.
 
@@ -140,7 +140,7 @@ asteroiddata2 <- asteroiddata2 %>%
                                                                                         if_else(asteroiddata2$est_diameter_meter_max <= 10000, "Large Global Effect", "Extinction Event",)))))))
 ```
 
-## 3.5  Adding a new continuous variable `diameter range`
+## 3.5  Adding a new continuous variable `Diameter Range`
 
 A second variable was added to the data frame.  The data provided by the API gives an estimated maximum diameter in meters and an estimated minimum in meters.  This new variable provides the range between the max and min estimate for comparison and helps understand how distant some of the estimations are.
 
