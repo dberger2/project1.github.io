@@ -149,7 +149,7 @@ asteroiddata2 <- as_tibble(asteroiddata2)%>% mutate(diameter_range = asteroiddat
 ```
 
 
-## 3.6 The final tibble!
+## 3.6 The formatted tibble!
 
 And here we are, after all the data wrangling we end up with a useful tibble to base our analysis from and work with!
 
@@ -255,7 +255,7 @@ BPH
 ```
 
 
-## 8.3 Bar chart showing counts of `Damage Potetial` and `Hazard Category`
+## 8.3 Bar chart showing counts of `Damage Potential` and `Hazard Category`
 
 The bar chart shows the count of asteroids categorized by the `damage` they could inflict if they impacted Earth and if they are considered `potentially hazardous`.
 
@@ -269,7 +269,7 @@ BCD
 The scatter plot shows the clustering of asteroids by whether they are `hazardous` and the `damage` they could inflict if they impacted Earth.
 
 ```{r, echo=TRUE, eval=TRUE}
-ASCT <- ggplot(data = asteroiddata3, aes(y = potentially_hazardous, x = damage_est)) + geom_jitter(aes(color = damage_est)) + guides(x=guide_axis(angle=45))
+ASCT <- ggplot(data = asteroiddata3, aes(y = potentially_hazardous, x = damage_est)) + geom_jitter(aes(color = damage_est)) + guides(x=guide_axis(angle=45)) + labs(y = "Hazard Category", x = "Estimated Damage")
 ASCT
 ```
 

@@ -185,7 +185,7 @@ the estimations are.
 asteroiddata2 <- as_tibble(asteroiddata2)%>% mutate(diameter_range = asteroiddata2$est_diameter_meter_max - asteroiddata2$est_diameter_meter_min)
 ```
 
-## 3.6 The final tibble!
+## 3.6 The formatted tibble!
 
 And here we are, after all the data wrangling we end up with a useful
 tibble to base our analysis from and work with!
@@ -402,7 +402,7 @@ BPH <- ggplot(data = asteroiddata3, aes(x = potentially_hazardous, y = est_diame
 BPH
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-27-1.png)<!-- -->
 
 ## 8.2 Boxplot size of asteroids grouped by `Damage Potential`
 
@@ -414,9 +414,9 @@ BPH <- ggplot(data = asteroiddata3, aes(x = damage_est, y = est_diameter_meter_m
 BPH
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-28-1.png)<!-- -->
 
-## 8.3 Bar chart showing counts of `Damage Potetial` and `Hazard Category`
+## 8.3 Bar chart showing counts of `Damage Potential` and `Hazard Category`
 
 The bar chart shows the count of asteroids categorized by the `damage`
 they could inflict if they impacted Earth and if they are considered
@@ -427,7 +427,7 @@ BCD <- ggplot(data = asteroiddata3, aes(y = damage_est)) + geom_bar(aes(fill = a
 BCD
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-29-1.png)<!-- -->
 
 ## 8.4 Scatterplot Groups by `Hazard Potential` and `Damage Potential`
 
@@ -435,11 +435,11 @@ The scatter plot shows the clustering of asteroids by whether they are
 `hazardous` and the `damage` they could inflict if they impacted Earth.
 
 ``` r
-ASCT <- ggplot(data = asteroiddata3, aes(y = potentially_hazardous, x = damage_est)) + geom_jitter(aes(color = damage_est)) + guides(x=guide_axis(angle=45))
+ASCT <- ggplot(data = asteroiddata3, aes(y = potentially_hazardous, x = damage_est)) + geom_jitter(aes(color = damage_est)) + guides(x=guide_axis(angle=45)) + labs(y = "Hazard Category", x = "Estimated Damage")
 ASCT
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-30-1.png)<!-- -->
 
 ## 8.5 Correlation of `Asteroid Diameter` and `Magnitude`
 
@@ -458,4 +458,4 @@ CDRE <- ggplot(data = asteroiddata3, aes(y = magnitude, x = est_diameter_meter_m
 CDRE
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-31-1.png)<!-- -->
